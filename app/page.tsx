@@ -1,100 +1,89 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { ProgressBar } from '@/components/ui/ProgressBar';
+import { Step1Property } from '@/components/steps/Step1Property';
+import { Step2Conditions } from '@/components/steps/Step2Conditions';
+import { Step3Quote } from '@/components/steps/Step3Quote';
+import { Step4Email } from '@/components/steps/Step4Email';
+import type { Step1Data, Step2Data, QuoteFormData, PricingBreakdown } from '@/types/quote';
+
+const DEFAULT_STEP1: Step1Data = {
+  address: '',
+  propertyType: 't2',
+  surface: 50,
+  floor: 'rdc',
+  elevator: false,
+};
+
+const DEFAULT_STEP2: Step2Data = {
+  parking: 'direct',
+  zfe: false,
+  deadline: 'flexible',
+  specialTreatments: [],
+  insalubrite: false,
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [step, setStep] = useState(1);
+  const [step1Data, setStep1Data] = useState<Step1Data>(DEFAULT_STEP1);
+  const [step2Data, setStep2Data] = useState<Step2Data>(DEFAULT_STEP2);
+  const [breakdown, setBreakdown] = useState<PricingBreakdown | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const formData: QuoteFormData = { ...step1Data, ...step2Data };
+
+  return (
+    <div className="min-h-screen bg-[#f7f7f5]">
+      {/* Top nav */}
+      <header className="border-b border-gray-200 bg-white">
+        <div className="max-w-xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-bold">N</span>
+            </div>
+            <span className="font-medium text-gray-900 text-sm tracking-wide">NETTORIA</span>
+          </div>
+          <span className="text-xs text-gray-400">Spécialiste du débarras</span>
+        </div>
+      </header>
+
+      {/* Main */}
+      <main className="max-w-xl mx-auto px-6 py-12">
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm px-8 py-10 sm:px-10 sm:py-12">
+          <ProgressBar currentStep={step} />
+
+          <div key={step} className="animate-slide-up">
+          {step === 1 && (
+            <Step1Property
+              defaultValues={step1Data}
+              onNext={(data) => { setStep1Data(data); setStep(2); }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          )}
+          {step === 2 && (
+            <Step2Conditions
+              defaultValues={step2Data}
+              onNext={(data) => { setStep2Data(data); setStep(3); }}
+              onBack={() => setStep(1)}
+            />
+          )}
+          {step === 3 && (
+            <Step3Quote
+              formData={formData}
+              onNext={(b) => { setBreakdown(b); setStep(4); }}
+              onBack={() => setStep(2)}
+            />
+          )}
+          {step === 4 && breakdown && (
+            <Step4Email formData={formData} breakdown={breakdown} onBack={() => setStep(3)} />
+          )}
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="max-w-xl mx-auto px-6 pb-8">
+        <p className="text-xs text-gray-400 text-center">
+          Devis sans engagement · Valable 10 jours · project.nettoria@gmail.com
+        </p>
       </footer>
     </div>
   );

@@ -85,8 +85,8 @@ export function Step4Email({ formData, breakdown, onBack }: Props) {
           </svg>
         </div>
         <div>
-          <h2 className="text-2xl font-light text-gray-900 mb-2">Devis envoyé</h2>
-          <p className="text-sm text-gray-500">Vérifiez votre boîte de réception — et vos spams si besoin.</p>
+          <h2 className="text-2xl font-light text-gray-900 mb-2">Demande envoyée</h2>
+          <p className="text-sm text-gray-500">Nous avons bien reçu votre demande et vous recontacterons très prochainement.</p>
         </div>
         <div className="bg-white rounded-2xl border border-gray-100 px-6 py-5 text-left space-y-2">
           <p className="text-xs text-gray-400 uppercase tracking-widest">Récapitulatif</p>

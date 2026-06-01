@@ -65,7 +65,11 @@ export function Step1Property({ defaultValues, onNext }: Props) {
         <Field label="Adresse">
           <AddressAutocomplete
             value={watch('address') ?? ''}
-            onChange={(v) => setValue('address', v, { shouldValidate: true })}
+            onChange={({ label, lat, lon }) => {
+              setValue('address', label, { shouldValidate: true });
+              setValue('addressLat', lat);
+              setValue('addressLon', lon);
+            }}
             error={errors.address?.message}
           />
           <input type="hidden" {...register('address', { required: "L'adresse est requise" })} />

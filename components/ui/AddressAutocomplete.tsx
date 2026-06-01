@@ -5,11 +5,19 @@ import { useState, useEffect, useRef } from 'react';
 interface Suggestion {
   display_name: string;
   place_id: number;
+  lat: string;
+  lon: string;
+}
+
+interface AddressValue {
+  label: string;
+  lat?: number;
+  lon?: number;
 }
 
 interface Props {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: AddressValue) => void;
   error?: string;
 }
 
@@ -21,7 +29,6 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
@@ -37,7 +44,7 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&addressdetails=1&countrycodes=fr`,
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&countrycodes=fr`,
         { headers: { 'User-Agent': 'NETTORIA-Pricing/1.0' } }
       );
       const data: Suggestion[] = await res.json();
@@ -52,14 +59,19 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
 
   const handleInput = (v: string) => {
     setQuery(v);
-    onChange(v);
+    // Typing invalidates previous coordinates
+    onChange({ label: v });
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => search(v), 350);
   };
 
   const select = (s: Suggestion) => {
     setQuery(s.display_name);
-    onChange(s.display_name);
+    onChange({
+      label: s.display_name,
+      lat: parseFloat(s.lat),
+      lon: parseFloat(s.lon),
+    });
     setSuggestions([]);
     setOpen(false);
   };

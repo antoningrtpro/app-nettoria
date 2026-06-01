@@ -14,6 +14,8 @@ export type Deadline = 'flexible' | '10j' | '5j' | '48h';
 
 export interface Step1Data {
   address: string;
+  addressLat?: number;
+  addressLon?: number;
   propertyType: PropertyType;
   surface: number;
   floor?: Floor;

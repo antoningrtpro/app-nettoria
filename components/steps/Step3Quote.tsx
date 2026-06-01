@@ -22,10 +22,10 @@ export function Step3Quote({ formData, onNext, onBack }: Props) {
         const res = await fetch('/api/calculate-distance', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ address: formData.address }),
+          body: JSON.stringify({ lat: formData.addressLat, lon: formData.addressLon }),
         });
         const json = await res.json();
-        const km = (typeof json.km === 'number' && isFinite(json.km) && json.km > 0) ? json.km : 30;
+        const km = (typeof json.km === 'number' && isFinite(json.km) && json.km > 0) ? json.km : 50;
         const estimated = json.estimated ?? true;
         setBreakdown(calculatePricing(formData, km, estimated));
       } catch {

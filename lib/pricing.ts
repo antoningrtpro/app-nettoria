@@ -1,6 +1,6 @@
 import type { QuoteFormData, PricingBreakdown, PropertyType } from '@/types/quote';
 
-// Always use tres_dense — encombrement n'est plus demandé
+// Heures de base pour la surface de référence de chaque type (très dense)
 const HEURES_BASE: Record<PropertyType, number> = {
   studio:   7,
   t2:       9,
@@ -10,6 +10,30 @@ const HEURES_BASE: Record<PropertyType, number> = {
   bureau:   11,
   commerce: 12,
   cave:     5,
+};
+
+// Surface de référence associée aux heures de base
+const SURFACE_REF: Record<PropertyType, number> = {
+  studio:   30,
+  t2:       50,
+  t3:       70,
+  t4plus:   90,
+  maison:   100,
+  bureau:   60,
+  commerce: 80,
+  cave:     20,
+};
+
+// Heures supplémentaires par m² au-delà de la surface de référence
+const H_PAR_M2_SUP: Record<PropertyType, number> = {
+  studio:   0.07,
+  t2:       0.07,
+  t3:       0.08,
+  t4plus:   0.08,
+  maison:   0.09,   // ~5 min/m² supplémentaire
+  bureau:   0.07,
+  commerce: 0.08,
+  cave:     0.10,
 };
 
 const TAUX_HORAIRE = 55;
@@ -40,7 +64,15 @@ export function calculatePricing(
   distanceKm: number,
   distanceEstimated: boolean
 ): PricingBreakdown {
-  const baseHours = HEURES_BASE[data.propertyType];
+  const type = data.propertyType;
+  const surface = data.surface ?? SURFACE_REF[type];
+
+  // Heures ajustées à la superficie
+  const hoursBase = HEURES_BASE[type];
+  const surfaceRef = SURFACE_REF[type];
+  const extraM2 = Math.max(0, surface - surfaceRef);
+  const baseHours = Math.round((hoursBase + extraM2 * H_PAR_M2_SUP[type]) * 10) / 10;
+
   const baseCost = baseHours * TAUX_HORAIRE;
 
   const majorations: { label: string; percent: number; amount: number }[] = [];

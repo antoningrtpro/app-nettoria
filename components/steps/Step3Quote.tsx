@@ -24,7 +24,9 @@ export function Step3Quote({ formData, onNext, onBack }: Props) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ address: formData.address }),
         });
-        const { km, estimated } = await res.json();
+        const json = await res.json();
+        const km = (typeof json.km === 'number' && isFinite(json.km) && json.km > 0) ? json.km : 30;
+        const estimated = json.estimated ?? true;
         setBreakdown(calculatePricing(formData, km, estimated));
       } catch {
         setBreakdown(calculatePricing(formData, 30, true));

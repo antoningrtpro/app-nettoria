@@ -64,6 +64,18 @@ export function calculatePricing(
   if (data.parking === 'limite')    { coeffSum += 0.10; majorations.push({ label: 'Stationnement limité', percent: 10, amount: 0 }); }
   if (data.parking === 'impossible') { coeffSum += 0.25; majorations.push({ label: 'Stationnement impossible', percent: 25, amount: 0 }); }
 
+  // Majoration distance (> 100 km de Palaiseau)
+  if (distanceKm > 200) {
+    coeffSum += 0.50;
+    majorations.push({ label: 'Grand déplacement (> 200 km)', percent: 50, amount: 0 });
+  } else if (distanceKm > 150) {
+    coeffSum += 0.35;
+    majorations.push({ label: 'Grand déplacement (151–200 km)', percent: 35, amount: 0 });
+  } else if (distanceKm > 100) {
+    coeffSum += 0.20;
+    majorations.push({ label: 'Grand déplacement (101–150 km)', percent: 20, amount: 0 });
+  }
+
   const coeffTotal = 1 + coeffSum;
   const majoratedBase = baseCost * coeffTotal;
 

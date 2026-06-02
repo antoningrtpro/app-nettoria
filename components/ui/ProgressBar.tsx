@@ -13,7 +13,7 @@ export function ProgressBar({ currentStep }: { currentStep: number }) {
       {/* Bar */}
       <div className="relative h-0.5 bg-gray-200 mb-6">
         <div
-          className="absolute inset-y-0 left-0 bg-gray-900 transition-all duration-500 ease-out"
+          className="absolute inset-y-0 left-0 bg-[#0EA5E9] transition-all duration-500 ease-out"
           style={{ width: `${((currentStep - 1) / (STEPS.length - 1)) * 100}%` }}
         />
       </div>
@@ -27,9 +27,9 @@ export function ProgressBar({ currentStep }: { currentStep: number }) {
               <div
                 className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
                   done
-                    ? 'bg-gray-900 text-white'
+                    ? 'bg-[#0EA5E9] text-white'
                     : active
-                    ? 'bg-gray-900 text-white ring-4 ring-gray-900/10'
+                    ? 'bg-[#0EA5E9] text-white ring-4 ring-[#0EA5E9]/10'
                     : 'bg-white border border-gray-300 text-gray-400'
                 }`}
               >

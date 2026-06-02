@@ -110,7 +110,7 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
           onFocus={() => suggestions.length > 0 && setOpen(true)}
           placeholder="12 rue de la Paix, 75001 Paris"
           className={`w-full border rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none transition-colors bg-white pr-10 ${
-            error ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-gray-900'
+            error ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-[#0EA5E9]'
           }`}
           autoComplete="off"
         />

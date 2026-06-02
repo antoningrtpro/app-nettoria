@@ -34,7 +34,7 @@ export function RadioGroup({ label, options, value, onChange, cols = 0 }: RadioG
               onClick={() => onChange(opt.value)}
               className={`px-5 py-3 rounded-xl border text-sm font-medium transition-all duration-200 text-left ${
                 active
-                  ? 'border-gray-900 bg-gray-900 text-white'
+                  ? 'border-[#0EA5E9] bg-[#0EA5E9] text-white'
                   : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
               }`}
             >

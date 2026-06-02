@@ -79,7 +79,7 @@ export function Step4Email({ formData, breakdown, onBack }: Props) {
   if (status === 'success') {
     return (
       <div className="animate-slide-up py-8 text-center space-y-6">
-        <div className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
+        <div className="w-16 h-16 bg-[#0EA5E9] rounded-full flex items-center justify-center mx-auto">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M5 12l5 5L20 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -124,7 +124,7 @@ export function Step4Email({ formData, breakdown, onBack }: Props) {
             <input
               {...register('clientName', { required: 'Requis' })}
               placeholder="Jean Dupont"
-              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
             />
             {errors.clientName && <p className="text-red-500 text-xs">{errors.clientName.message}</p>}
           </div>
@@ -139,7 +139,7 @@ export function Step4Email({ formData, breakdown, onBack }: Props) {
               })}
               type="email"
               placeholder="jean@exemple.fr"
-              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
             />
             {errors.clientEmail && <p className="text-red-500 text-xs">{errors.clientEmail.message}</p>}
           </div>
@@ -186,7 +186,7 @@ export function Step4Email({ formData, breakdown, onBack }: Props) {
                 })}
                 type="tel"
                 placeholder="6 12 34 56 78"
-                className="flex-1 border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+                className="flex-1 border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
               />
             </div>
             {errors.phoneNumber && <p className="text-red-500 text-xs">{errors.phoneNumber.message}</p>}
@@ -234,7 +234,7 @@ export function Step4Email({ formData, breakdown, onBack }: Props) {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="flex-1 bg-gray-900 text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            className="flex-1 bg-[#0EA5E9] text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-[#0284C7] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {status === 'loading' ? (
               <>

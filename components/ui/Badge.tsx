@@ -6,7 +6,7 @@ interface BadgeProps {
 }
 
 const VARIANTS = {
-  dark: 'bg-gray-900 text-white',
+  dark: 'bg-[#0EA5E9] text-white',
   red: 'bg-red-50 text-red-600 border border-red-200',
   orange: 'bg-amber-50 text-amber-700 border border-amber-200',
   blue: 'bg-blue-50 text-blue-600 border border-blue-200',

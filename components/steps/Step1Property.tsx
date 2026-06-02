@@ -89,7 +89,7 @@ export function Step1Property({ defaultValues, onNext, onBack }: Props) {
                 onClick={() => setValue('propertyType', opt.value as any)}
                 className={`py-3 px-4 rounded-xl border text-sm font-medium transition-all duration-200 ${
                   propertyType === opt.value
-                    ? 'border-gray-900 bg-gray-900 text-white'
+                    ? 'border-[#0EA5E9] bg-[#0EA5E9] text-white'
                     : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -126,7 +126,7 @@ export function Step1Property({ defaultValues, onNext, onBack }: Props) {
                   onClick={() => setValue('elevator', v)}
                   className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all ${
                     watch('elevator') === v
-                      ? 'border-gray-900 bg-gray-900 text-white'
+                      ? 'border-[#0EA5E9] bg-[#0EA5E9] text-white'
                       : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
                   }`}
                 >
@@ -147,7 +147,7 @@ export function Step1Property({ defaultValues, onNext, onBack }: Props) {
           </button>
           <button
             type="submit"
-            className="flex-1 bg-gray-900 text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors"
+            className="flex-1 bg-[#0EA5E9] text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-[#0284C7] transition-colors"
           >
             Continuer
           </button>

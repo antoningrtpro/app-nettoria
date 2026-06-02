@@ -130,7 +130,7 @@ export function QuoteDetail({
         </div>
 
         {/* Total */}
-        <div className="px-6 py-5 bg-gray-900 flex justify-between items-end">
+        <div className="px-6 py-5 bg-[#0EA5E9] flex justify-between items-end">
           <div>
             <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total estimé HT</p>
             <p className="text-xs text-gray-500">TVA non applicable — art. 293B CGI</p>

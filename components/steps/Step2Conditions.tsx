@@ -82,7 +82,7 @@ export function Step2Conditions({ defaultValues, onNext, onBack }: Props) {
                 onClick={() => setValue('zfe', v)}
                 className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all ${
                   watch('zfe') === v
-                    ? 'border-gray-900 bg-gray-900 text-white'
+                    ? 'border-[#0EA5E9] bg-[#0EA5E9] text-white'
                     : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -106,7 +106,7 @@ export function Step2Conditions({ defaultValues, onNext, onBack }: Props) {
             value={watch('preferredDate') ?? ''}
             onChange={(e) => setValue('preferredDate', e.target.value)}
             placeholder="ex. semaine du 15 juin, ou à partir du 20/06…"
-            className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+            className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
           />
         </Field>
 
@@ -122,7 +122,7 @@ export function Step2Conditions({ defaultValues, onNext, onBack }: Props) {
                   onClick={() => toggleTreatment(opt.value)}
                   className={`flex items-center gap-3 px-4 py-3.5 rounded-xl border text-sm font-medium transition-all ${
                     checked
-                      ? 'border-gray-900 bg-gray-900 text-white'
+                      ? 'border-[#0EA5E9] bg-[#0EA5E9] text-white'
                       : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
                   }`}
                 >
@@ -187,7 +187,7 @@ export function Step2Conditions({ defaultValues, onNext, onBack }: Props) {
           <button
             type="submit"
             disabled={insalubrite}
-            className="flex-1 bg-gray-900 text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="flex-1 bg-[#0EA5E9] text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-[#0284C7] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Voir le devis
           </button>

@@ -62,7 +62,7 @@ export function Step1Contact({ defaultValues, onNext }: Props) {
             <input
               {...register('clientName', { required: 'Requis' })}
               placeholder="Jean Dupont"
-              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
             />
             {errors.clientName && <p className="text-red-500 text-xs">{errors.clientName.message}</p>}
           </div>
@@ -77,7 +77,7 @@ export function Step1Contact({ defaultValues, onNext }: Props) {
               })}
               type="email"
               placeholder="jean@exemple.fr"
-              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+              className="w-full border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
             />
             {errors.clientEmail && <p className="text-red-500 text-xs">{errors.clientEmail.message}</p>}
           </div>
@@ -122,7 +122,7 @@ export function Step1Contact({ defaultValues, onNext }: Props) {
                 })}
                 type="tel"
                 placeholder="6 12 34 56 78"
-                className="flex-1 border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 transition-colors bg-white"
+                className="flex-1 border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] transition-colors bg-white"
               />
             </div>
             {errors.phoneNumber && <p className="text-red-500 text-xs">{errors.phoneNumber.message}</p>}
@@ -156,7 +156,7 @@ export function Step1Contact({ defaultValues, onNext }: Props) {
 
         <button
           type="submit"
-          className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors"
+          className="w-full bg-[#0EA5E9] text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-[#0284C7] transition-colors"
         >
           Continuer
         </button>

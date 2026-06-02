@@ -46,7 +46,7 @@ export default function Home() {
       <header className="border-b border-gray-200 bg-white">
         <div className="max-w-xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 bg-[#0EA5E9] rounded-lg flex items-center justify-center">
               <span className="text-white text-xs font-bold">N</span>
             </div>
             <span className="font-medium text-gray-900 text-sm tracking-wide">NETTORIA</span>

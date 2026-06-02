@@ -24,11 +24,12 @@ interface Props {
 // Bounding box France métropolitaine (Corse exclue, DOM-TOM exclus)
 // Corse : lat 41.3–43.1, lon 8.5–9.6 → on l'exclut explicitement
 function isMetroFrance(lat: number, lon: number): boolean {
-  // Hors hexagone
-  if (lat < 42.3 || lat > 51.2 || lon < -5.2 || lon > 8.3) return false;
-  // Exclure la Corse (lat < 43.1 et lon > 8.4)
-  if (lat < 43.1 && lon > 8.4) return false;
-  return true;
+  // France métropolitaine + Corse
+  // Hexagone : lat 42.3–51.2, lon -5.2–8.3
+  if (lat >= 42.3 && lat <= 51.2 && lon >= -5.2 && lon <= 8.3) return true;
+  // Corse : lat 41.3–43.1, lon 8.4–9.7
+  if (lat >= 41.3 && lat <= 43.1 && lon >= 8.4 && lon <= 9.7) return true;
+  return false;
 }
 
 export function AddressAutocomplete({ value, onChange, error }: Props) {

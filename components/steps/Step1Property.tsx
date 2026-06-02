@@ -31,10 +31,13 @@ interface Props {
   onNext: (data: Step1Data) => void;
 }
 
-function Field({ label, children, error }: { label: string; children: React.ReactNode; error?: string }) {
+function Field({ label, note, children, error }: { label: string; note?: string; children: React.ReactNode; error?: string }) {
   return (
     <div className="space-y-3">
-      <span className="text-sm font-medium text-gray-500 uppercase tracking-widest">{label}</span>
+      <div className="flex items-baseline gap-2 flex-wrap">
+        <span className="text-sm font-medium text-gray-500 uppercase tracking-widest">{label}</span>
+        {note && <span className="text-xs text-gray-400 italic">{note}</span>}
+      </div>
       {children}
       {error && <p className="text-red-500 text-xs">{error}</p>}
     </div>
@@ -62,7 +65,7 @@ export function Step1Property({ defaultValues, onNext }: Props) {
         </div>
 
         {/* Address */}
-        <Field label="Adresse">
+        <Field label="Adresse" note="Nous intervenons uniquement en France Métropolitaine">
           <AddressAutocomplete
             value={watch('address') ?? ''}
             onChange={({ label, lat, lon }) => {

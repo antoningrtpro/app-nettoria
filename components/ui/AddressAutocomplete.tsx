@@ -21,11 +21,22 @@ interface Props {
   error?: string;
 }
 
+// Bounding box France métropolitaine (Corse exclue, DOM-TOM exclus)
+// Corse : lat 41.3–43.1, lon 8.5–9.6 → on l'exclut explicitement
+function isMetroFrance(lat: number, lon: number): boolean {
+  // Hors hexagone
+  if (lat < 42.3 || lat > 51.2 || lon < -5.2 || lon > 8.3) return false;
+  // Exclure la Corse (lat < 43.1 et lon > 8.4)
+  if (lat < 43.1 && lon > 8.4) return false;
+  return true;
+}
+
 export function AddressAutocomplete({ value, onChange, error }: Props) {
   const [query, setQuery] = useState(value);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [outsideError, setOutsideError] = useState('');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -44,12 +55,16 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&countrycodes=fr`,
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=8&countrycodes=fr`,
         { headers: { 'User-Agent': 'NETTORIA-Pricing/1.0' } }
       );
       const data: Suggestion[] = await res.json();
-      setSuggestions(data);
-      setOpen(data.length > 0);
+      // Filtrer uniquement la France métropolitaine
+      const filtered = data.filter((s) =>
+        isMetroFrance(parseFloat(s.lat), parseFloat(s.lon))
+      );
+      setSuggestions(filtered);
+      setOpen(filtered.length > 0);
     } catch {
       setSuggestions([]);
     } finally {
@@ -59,19 +74,27 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
 
   const handleInput = (v: string) => {
     setQuery(v);
-    // Typing invalidates previous coordinates
+    setOutsideError('');
     onChange({ label: v });
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => search(v), 350);
   };
 
   const select = (s: Suggestion) => {
+    const lat = parseFloat(s.lat);
+    const lon = parseFloat(s.lon);
+
+    if (!isMetroFrance(lat, lon)) {
+      setOutsideError('Nous intervenons uniquement en France métropolitaine.');
+      onChange({ label: s.display_name });
+      setSuggestions([]);
+      setOpen(false);
+      return;
+    }
+
+    setOutsideError('');
     setQuery(s.display_name);
-    onChange({
-      label: s.display_name,
-      lat: parseFloat(s.lat),
-      lon: parseFloat(s.lon),
-    });
+    onChange({ label: s.display_name, lat, lon });
     setSuggestions([]);
     setOpen(false);
   };
@@ -113,7 +136,13 @@ export function AddressAutocomplete({ value, onChange, error }: Props) {
         </ul>
       )}
 
-      {error && <p className="text-red-500 text-xs mt-1.5">{error}</p>}
+      {outsideError && (
+        <div className="mt-2 flex items-start gap-2 px-3 py-2.5 rounded-lg bg-red-50 border border-red-200">
+          <span className="text-red-500 text-sm flex-shrink-0">⚠️</span>
+          <p className="text-red-600 text-xs leading-snug">{outsideError}</p>
+        </div>
+      )}
+      {!outsideError && error && <p className="text-red-500 text-xs mt-1.5">{error}</p>}
     </div>
   );
 }

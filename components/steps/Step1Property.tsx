@@ -29,6 +29,7 @@ const NO_FLOOR_TYPES = ['maison', 'cave'];
 interface Props {
   defaultValues: Step1Data;
   onNext: (data: Step1Data) => void;
+  onBack: () => void;
 }
 
 function Field({ label, note, children, error }: { label: string; note?: string; children: React.ReactNode; error?: string }) {
@@ -44,7 +45,7 @@ function Field({ label, note, children, error }: { label: string; note?: string;
   );
 }
 
-export function Step1Property({ defaultValues, onNext }: Props) {
+export function Step1Property({ defaultValues, onNext, onBack }: Props) {
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<Step1Data>({
     defaultValues,
   });
@@ -61,7 +62,7 @@ export function Step1Property({ defaultValues, onNext }: Props) {
       <div className="space-y-10">
         <div>
           <h2 className="text-2xl font-light text-gray-900 mb-1">Le bien à débarrasser</h2>
-          <p className="text-sm text-gray-400">Étape 1 sur 4</p>
+          <p className="text-sm text-gray-400">Étape 2 sur 4</p>
         </div>
 
         {/* Address */}
@@ -136,12 +137,21 @@ export function Step1Property({ defaultValues, onNext }: Props) {
           </Field>
         )}
 
-        <button
-          type="submit"
-          className="w-full bg-gray-900 text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors"
-        >
-          Continuer
-        </button>
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex-1 border border-gray-200 text-gray-600 py-4 rounded-xl font-medium text-sm hover:border-gray-400 transition-colors"
+          >
+            Retour
+          </button>
+          <button
+            type="submit"
+            className="flex-1 bg-gray-900 text-white py-4 rounded-xl font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors"
+          >
+            Continuer
+          </button>
+        </div>
       </div>
     </form>
   );

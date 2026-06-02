@@ -31,6 +31,14 @@ export interface Step2Data {
   insalubrite: boolean;
 }
 
+export interface ContactData {
+  clientName: string;
+  clientEmail: string;
+  phoneNumber: string;
+  dialCode: string;
+  whatsapp: boolean;
+}
+
 export interface QuoteFormData extends Step1Data, Step2Data {}
 
 export interface PricingBreakdown {

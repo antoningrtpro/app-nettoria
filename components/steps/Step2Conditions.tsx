@@ -62,7 +62,7 @@ export function Step2Conditions({ defaultValues, onNext, onBack }: Props) {
       <div className="space-y-10">
         <div>
           <h2 className="text-2xl font-light text-gray-900 mb-1">Conditions du chantier</h2>
-          <p className="text-sm text-gray-400">Étape 2 sur 4</p>
+          <p className="text-sm text-gray-400">Étape 3 sur 4</p>
         </div>
 
         <RadioGroup

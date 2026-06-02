@@ -1,10 +1,10 @@
 'use client';
 
 const STEPS = [
-  { number: 1, label: 'Le bien' },
-  { number: 2, label: 'Conditions' },
-  { number: 3, label: 'Devis' },
-  { number: 4, label: 'Envoi' },
+  { number: 1, label: 'Coordonnées' },
+  { number: 2, label: 'Le bien' },
+  { number: 3, label: 'Conditions' },
+  { number: 4, label: 'Devis' },
 ];
 
 export function ProgressBar({ currentStep }: { currentStep: number }) {

@@ -2,11 +2,19 @@
 
 import { useState } from 'react';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { Step1Contact } from '@/components/steps/Step1Contact';
 import { Step1Property } from '@/components/steps/Step1Property';
 import { Step2Conditions } from '@/components/steps/Step2Conditions';
 import { Step3Quote } from '@/components/steps/Step3Quote';
-import { Step4Email } from '@/components/steps/Step4Email';
-import type { Step1Data, Step2Data, QuoteFormData, PricingBreakdown } from '@/types/quote';
+import type { ContactData, Step1Data, Step2Data, QuoteFormData } from '@/types/quote';
+
+const DEFAULT_CONTACT: ContactData = {
+  clientName: '',
+  clientEmail: '',
+  phoneNumber: '',
+  dialCode: '+33',
+  whatsapp: false,
+};
 
 const DEFAULT_STEP1: Step1Data = {
   address: '',
@@ -26,9 +34,9 @@ const DEFAULT_STEP2: Step2Data = {
 
 export default function Home() {
   const [step, setStep] = useState(1);
+  const [contactData, setContactData] = useState<ContactData>(DEFAULT_CONTACT);
   const [step1Data, setStep1Data] = useState<Step1Data>(DEFAULT_STEP1);
   const [step2Data, setStep2Data] = useState<Step2Data>(DEFAULT_STEP2);
-  const [breakdown, setBreakdown] = useState<PricingBreakdown | null>(null);
 
   const formData: QuoteFormData = { ...step1Data, ...step2Data };
 
@@ -53,29 +61,33 @@ export default function Home() {
           <ProgressBar currentStep={step} />
 
           <div key={step} className="animate-slide-up">
-          {step === 1 && (
-            <Step1Property
-              defaultValues={step1Data}
-              onNext={(data) => { setStep1Data(data); setStep(2); }}
-            />
-          )}
-          {step === 2 && (
-            <Step2Conditions
-              defaultValues={step2Data}
-              onNext={(data) => { setStep2Data(data); setStep(3); }}
-              onBack={() => setStep(1)}
-            />
-          )}
-          {step === 3 && (
-            <Step3Quote
-              formData={formData}
-              onNext={(b) => { setBreakdown(b); setStep(4); }}
-              onBack={() => setStep(2)}
-            />
-          )}
-          {step === 4 && breakdown && (
-            <Step4Email formData={formData} breakdown={breakdown} onBack={() => setStep(3)} />
-          )}
+            {step === 1 && (
+              <Step1Contact
+                defaultValues={contactData}
+                onNext={(data) => { setContactData(data); setStep(2); }}
+              />
+            )}
+            {step === 2 && (
+              <Step1Property
+                defaultValues={step1Data}
+                onNext={(data) => { setStep1Data(data); setStep(3); }}
+                onBack={() => setStep(1)}
+              />
+            )}
+            {step === 3 && (
+              <Step2Conditions
+                defaultValues={step2Data}
+                onNext={(data) => { setStep2Data(data); setStep(4); }}
+                onBack={() => setStep(2)}
+              />
+            )}
+            {step === 4 && (
+              <Step3Quote
+                formData={formData}
+                contactData={contactData}
+                onBack={() => setStep(3)}
+              />
+            )}
           </div>
         </div>
       </main>
